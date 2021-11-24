@@ -61,6 +61,10 @@ class Anime {
     @UpdateDateColumn()
     updated_at: Date;
 
+    seasonsCount?: number;
+
+    evaluationMedia?: number;
+
     number_seasons: number;
 }
 

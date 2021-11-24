@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable no-plusplus */
 import { getRepository } from 'typeorm';
 import Anime from '../models/Anime';
@@ -5,24 +6,27 @@ import Anime from '../models/Anime';
 interface Request {
     id?: string;
 }
+interface optionsQuery {
+    relations: string[];
+    where?: {};
+}
 
 class RetrieveAllAnimeService {
     public async execute({ id }: Request): Promise<Anime[]> {
         const animesRepository = getRepository(Anime);
-        const selectOptions = {
+        const selectOptions: optionsQuery = {
             relations: ['genres', 'authors', 'seasons', 'evaluation'],
         };
 
         if (id) {
             selectOptions.where = { id };
         }
-        let animes = await animesRepository.find(selectOptions);
-
-        animes = animes.map(anime => {
+        const animes = await animesRepository.find(selectOptions);
+        const mappedAnimes = animes.map(animeFor => {
             let total = 0;
             let like = 0;
             // eslint-disable-next-line no-restricted-syntax
-            for (const evaluationItem of anime.evaluation) {
+            for (const evaluationItem of animeFor.evaluation) {
                 total++;
                 if (evaluationItem.evaluation) like++;
             }
@@ -30,12 +34,12 @@ class RetrieveAllAnimeService {
             like = like === 0 ? 1 : like;
             const media = (like / total) * 100;
             return {
-                ...anime,
-                seasonsCount: anime.seasons.length,
-                evaluation: media,
+                ...animeFor,
+                seasonsCount: animeFor.seasons.length,
+                evaluationMedia: media,
             };
         });
-        return animes;
+        return mappedAnimes;
     }
 }
 
