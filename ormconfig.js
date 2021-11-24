@@ -9,7 +9,7 @@ module.exports = {
     ],
     "cli": {
         "migrationsDir": "./src/database/migrations"
-    }
+    },
     "extra": {
         "ssl": true,
     },
