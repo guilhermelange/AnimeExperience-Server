@@ -1,4 +1,4 @@
-module.exports = {
+let dbConfig = {
     "type": "postgres",
     "url": process.env.DATABASE_URL,
     "entities": [
@@ -10,8 +10,13 @@ module.exports = {
     "cli": {
         "migrationsDir": "./src/database/migrations"
     },
-    "extra": {
+}
+
+if  (!process.env.LOCAL) {
+    dbConfig.extra = {
         "ssl": true,
         "rejectUnauthorized": false,
-    },
+    }
 }
+
+module.exports = dbConfig
