@@ -1,4 +1,4 @@
-let dbConfig = {
+const dbConfig = {
     "type": "postgres",
     "url": process.env.DATABASE_URL,
     "entities": [
@@ -10,17 +10,7 @@ let dbConfig = {
     "cli": {
         "migrationsDir": "./src/database/migrations"
     },
-    "extra": {
-        "ssl": true,
-        "rejectUnauthorized": false,
-    }
+    "extra": process.env.ORM_SSL ? JSON.parse(process.env.ORM_SSL) : {}
 }
 
-if  (!process.env.LOCAL) {
-    /*dbConfig.extra = {
-        "ssl": true,
-        "rejectUnauthorized": false,
-    }*/
-}
-
-module.exports = dbConfig
+module.exports = dbConfig;
