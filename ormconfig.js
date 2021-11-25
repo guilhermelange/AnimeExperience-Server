@@ -10,6 +10,10 @@ let dbConfig = {
     "cli": {
         "migrationsDir": "./src/database/migrations"
     },
+    "extra": {
+        "ssl": true,
+        "rejectUnauthorized": false,
+    }
 }
 
 if  (!process.env.LOCAL) {
