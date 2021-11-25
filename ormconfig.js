@@ -17,10 +17,10 @@ let dbConfig = {
 }
 
 if  (!process.env.LOCAL) {
-    dbConfig.extra = {
+    /*dbConfig.extra = {
         "ssl": true,
         "rejectUnauthorized": false,
-    }
+    }*/
 }
 
 module.exports = dbConfig
