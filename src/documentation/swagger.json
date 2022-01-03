@@ -1,0 +1,155 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Anime Experience - AnEx",
+        "description": "API para desenvolvimento da aplicação para streaming de mídia focada em animes",
+        "contact": {
+            "name": "Guilherme Luiz Lange",
+            "url": "https://github.com/guilhermelange",
+            "email":  "gui.luizlange@gmail.com"
+        },
+        "version": "1.0.0",
+        "licence": {
+            "name": "MIT"
+        }
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3333",
+            "description": "API Homolog"
+        },
+        {
+            "url": "https://anexserver.herokuapp.com",
+            "description": "ÄPI Production"
+        }
+    ],
+    "paths": {
+        "/users": {
+            "post": {
+                "sumarry": "Cadastro de Usuário",
+                "description": "Responsável pela criação de um usuário",
+                "tags": ["Users"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples": {
+                                "CreatedUser": {
+                                    "value": {
+                                        "name": "Guilherme Lange New",
+                                        "email": "gui.luizlangex@gmail.com",
+                                        "password": "pass"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Email adress already used."
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/CreatedUser"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "sumarry": "Atualização de Avatar do Usuário",
+                "description": "Responsável pela atualização do avatar do usuário",
+                "tags": ["Users"],
+                "security": [{"bearerAuth": []}],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "avatar": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Guilherme Luiz Lange"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "gui.luizlange@gmail.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "12345"
+                    },
+                    "avatar": {
+                        "type": "string",
+                        "example": ""
+                    }
+                }
+            },
+            "CreatedUser": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Guilherme Luiz Lange"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "gui.luizlange@gmail.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "12345"
+                    },
+                    "avatar": {
+                        "type": "string",
+                        "example": ""
+                    },
+                    "id": {
+                        "type": "string",
+                        "example": "91ffcd03-80e8-4c41-a514-1d44240cebd1"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "example": "2022-01-03T16:54:16.697Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "example": "2022-01-03T16:54:16.697Z"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}
