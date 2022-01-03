@@ -30,13 +30,15 @@
                 "description": "Responsável pela criação de um usuário",
                 "tags": ["Users"],
                 "requestBody": {
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "$ref": "#/components/schemas/User"
                             },
+
                             "examples": {
-                                "CreatedUser": {
+                                "Exemplo": {
                                     "value": {
                                         "name": "Guilherme Lange New",
                                         "email": "gui.luizlangex@gmail.com",
@@ -49,18 +51,10 @@
                 },
                 "responses": {
                     "400": {
-                        "description": "Email adress already used."
+                        "description": "Email já utilizado"
                     },
                     "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "$ref": "#/components/schemas/CreatedUser"
-                                }
-                            }
-                        }
+                        "description": "Retorno o usuário cadastrado"
                     }
                 }
             }
@@ -94,6 +88,7 @@
                 "description": "Responsável pelo login do usuário, fornecendo um token para autenticação",
                 "tags": ["Sessions"],
                 "requestBody": {
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
@@ -104,10 +99,21 @@
                                     },
                                     "password": {
                                         "type": "string"
+                                    },
+                                    "google": {
+                                        "type": "boolean"
                                     }
                                 }
                             }
                         }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Combinação de email/senha inválida."
+                    },
+                    "200": {
+                        "description": "Retorna o usuário autenticado e o token"
                     }
                 }
             }
@@ -117,18 +123,14 @@
                 "sumarry": "Buscar Animes",
                 "description": "Responsável por fornecer os dados do anime",
                 "tags": ["Animes"],
-                "security": [{"bearerAuth": []}]
-            },
-            "responses": {
-                "200": {
-                    "description": "OK",
-                    "content": {
-                        "application/json": {
-                        }
+                "security": [{"bearerAuth": []}],
+                "responses": {
+                    "200": {
+                        "description": "Retorna os animes"
+                    },
+                    "401": {
+                        "description": "Id do anime inválido ou usuário não autenticado"
                     }
-                },
-                "401": {
-                    "description": "Invalid Uuid"
                 }
             }
         },
@@ -142,10 +144,18 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Id do Anime",
+                        "description": "Id do anime",
                         "required": true
                     }
-                ]
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Retorna os animes"
+                    },
+                    "401": {
+                        "description": "Id do anime inválido ou usuário não autenticado"
+                    }
+                }
             }
         }
     },
@@ -155,53 +165,16 @@
                 "type": "object",
                 "properties": {
                     "name": {
-                        "type": "string",
-                        "example": "Guilherme Luiz Lange"
+                        "type": "string"
                     },
                     "email": {
-                        "type": "string",
-                        "example": "gui.luizlange@gmail.com"
+                        "type": "string"
                     },
                     "password": {
-                        "type": "string",
-                        "example": "12345"
+                        "type": "string"
                     },
                     "avatar": {
-                        "type": "string",
-                        "example": ""
-                    }
-                }
-            },
-            "CreatedUser": {
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string",
-                        "example": "Guilherme Luiz Lange"
-                    },
-                    "email": {
-                        "type": "string",
-                        "example": "gui.luizlange@gmail.com"
-                    },
-                    "password": {
-                        "type": "string",
-                        "example": "12345"
-                    },
-                    "avatar": {
-                        "type": "string",
-                        "example": ""
-                    },
-                    "id": {
-                        "type": "string",
-                        "example": "91ffcd03-80e8-4c41-a514-1d44240cebd1"
-                    },
-                    "created_at": {
-                        "type": "string",
-                        "example": "2022-01-03T16:54:16.697Z"
-                    },
-                    "updated_at": {
-                        "type": "string",
-                        "example": "2022-01-03T16:54:16.697Z"
+                        "type": "string"
                     }
                 }
             }

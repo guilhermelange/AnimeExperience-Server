@@ -3,6 +3,12 @@ import AuthenticateUserService from '../service/AuthenticateUserService';
 
 const sessionsRouter = Router();
 
+/**
+ * @swagger
+ * /users:
+ *   post:
+ *     description: Returns users
+ */
 sessionsRouter.post('/', async (request, response) => {
     const { email, password, google } = request.body;
     const authenticateUser = new AuthenticateUserService();
