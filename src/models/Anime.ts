@@ -47,19 +47,22 @@ class Anime {
 
     @ManyToMany(() => User, user => user.animes)
     @JoinTable({ name: 'anime_user_favorites' })
-    favorites: User[];
+    favorites?: User[];
 
     @OneToMany(() => Evaluation, evaluation => evaluation.anime)
-    evaluation: Evaluation[];
+    evaluation?: Evaluation[];
 
     @OneToMany(() => Seasons, season => season.animes)
-    seasons: Seasons[];
+    seasons?: Seasons[];
 
     @CreateDateColumn()
-    created_at: Date;
+    created_at?: Date;
 
     @UpdateDateColumn()
-    updated_at: Date;
+    updated_at?: Date;
+
+    @Column()
+    playlist_link?: string;
 
     seasonsCount?: number;
 

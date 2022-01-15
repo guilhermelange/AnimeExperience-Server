@@ -14,7 +14,7 @@ import Episodes from './Episode';
 @Entity('season')
 class Season {
     @PrimaryColumn()
-    number: string;
+    number: number;
 
     @Column()
     name: string;
@@ -23,7 +23,7 @@ class Season {
     description: string;
 
     @PrimaryColumn('uuid')
-    animeId: string;
+    animeId?: string;
 
     @ManyToOne(() => Anime, anime => anime.seasons, { primary: true })
     @JoinColumn({ name: 'animeId' })
@@ -33,10 +33,10 @@ class Season {
     episodes: Episodes[];
 
     @CreateDateColumn()
-    created_at: Date;
+    created_at?: Date;
 
     @UpdateDateColumn()
-    updated_at: Date;
+    updated_at?: Date;
 }
 
 export default Season;
