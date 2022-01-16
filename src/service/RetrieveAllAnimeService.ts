@@ -76,7 +76,6 @@ class RetrieveAllAnimeService {
             total = total === 0 ? 1 : total;
             like = like === 0 ? 1 : like;
             const media = +((like / total) * 100).toFixed(2);
-            console.log(animeFor.name, total, like, media);
 
             delete animeFor.created_at;
             delete animeFor.updated_at;
