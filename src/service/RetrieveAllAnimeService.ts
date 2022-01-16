@@ -58,18 +58,25 @@ class RetrieveAllAnimeService {
 
             if (evaluations) {
                 for (const evaluation of evaluations) {
-                    if (evaluation.anime_user_evaluation_userId === userId) {
-                        evaluationUser =
-                            evaluation.anime_user_evaluation_evaluation;
+                    if (
+                        evaluation.anime_user_evaluation_animeId === animeFor.id
+                    ) {
+                        if (
+                            evaluation.anime_user_evaluation_userId === userId
+                        ) {
+                            evaluationUser =
+                                evaluation.anime_user_evaluation_evaluation;
+                        }
+                        total++;
+                        if (evaluation.anime_user_evaluation_evaluation) like++;
                     }
-                    total++;
-                    if (evaluation.anime_user_evaluation_evaluation) like++;
                 }
             }
 
             total = total === 0 ? 1 : total;
             like = like === 0 ? 1 : like;
             const media = +((like / total) * 100).toFixed(2);
+            console.log(animeFor.name, total, like, media);
 
             delete animeFor.created_at;
             delete animeFor.updated_at;
